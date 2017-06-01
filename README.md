@@ -23,8 +23,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/s
 ./kapply.sh
 ```
 
-Then run `fix-ingress.sh` in order to attempt to rename the `X-Original-URL` header
-to the `X-Auth-Request-URL` header that oauth2_proxy (is supposed to) respect.
+Then run `fix-ingress.sh` in order to attempt to rename the `X-Original-URI` header
+to the `X-Auth-Request-Redirect` header that oauth2_proxy (is supposed to) respect.
 
 Notes:
 * https://github.com/bitly/oauth2_proxy/issues/399
