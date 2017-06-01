@@ -1,0 +1,40 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: media
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: 'media'
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: media
+        image: docker.io/library/httpd:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: media
+          mountPath: /usr/local/apache2/htdocs
+          readOnly: true
+      volumes:
+      - name: media
+        hostPath:
+          path: /mnt/data/Media
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: media

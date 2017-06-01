@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        k8s-app: oauth2-proxy
+    spec:
+      containers:
+      - name: oauth2-proxy
+        image: docker.io/colemickens/oauth2_proxy:insecure_do_not_use
+        imagePullPolicy: Always
+        command: [ 'oauth2_proxy', '--config=/var/run/secrets/oauth2proxy/oauth2proxy.config' ]
+        volumeMounts:
+        - name: oauth2proxy-secret
+          readOnly: true
+          mountPath: /var/run/secrets/oauth2proxy
+        ports:
+        - containerPort: 4180
+          protocol: TCP
+      volumes:
+      - name: oauth2proxy-secret
+        secret:
+          secretName: oauth2proxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: default
+spec:
+  ports:
+  - name: http
+    port: 4180
+    protocol: TCP
+    targetPort: 4180
+  selector:
+    k8s-app: oauth2-proxy

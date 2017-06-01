@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "nginx"
+  name: auth-chimera-mickens-io
+  namespace: default
+spec:
+  rules:
+  - host: 'auth.chimera.mickens.io'
+    http:
+      paths:
+      - path: /oauth2
+        backend:
+          serviceName: oauth2-proxy
+          servicePort: 4180
+  tls:
+  - hosts:
+    - auth.chimera.mickens.io
+    secretName: tls-auth-chimera-mickens-io
