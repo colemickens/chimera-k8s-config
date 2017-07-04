@@ -2,6 +2,8 @@
 
 set -x
 
+yaourt -S {kubectl,kubelet,kubeadm,kubernetes-cni}-bin --needed
+
 sudo systemctl start kubelet
 sudo systemctl enable kubelet
 sudo kubeadm init
