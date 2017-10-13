@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -x
+set -e
+set -u
 
 sudo systemctl stop kubelet
 sudo systemctl disable kubelet
@@ -12,7 +14,8 @@ sudo systemctl disable kubelet
 #sudo find /var/lib/kubelet | xargs -t -n 1 findmnt -n -t tmpfs -o TARGET -T | uniq | xargs -t -r sudo umount -v;
 #sudo systemctl start docker
 
-docker kill $(docker ps -aq); docker rm $(docker ps -aq)
+docker kill $(docker ps -aq) || true;
+docker rm $(docker ps -aq) || true;
 
 sudo kubeadm reset
 

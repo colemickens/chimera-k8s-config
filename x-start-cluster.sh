@@ -1,8 +1,12 @@
 #!/bin/bash
 
 set -x
+set -e
+set -u
 
-yaourt -S {kubectl,kubelet,kubeadm,kubernetes-cni}-bin --needed
+yaourt -S {kubectl,kubelet,kubeadm,kubernetes-cni}-bin --needed --noconfirm
+
+sudo systemctl daemon-reload
 
 sudo systemctl start kubelet
 sudo systemctl enable kubelet

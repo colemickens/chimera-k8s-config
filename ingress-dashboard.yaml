@@ -15,6 +15,7 @@ spec:
       paths:
       - path: /
         backend:
+#          serviceName: kubernetes-dashboard
           serviceName: kubernetes-dashboard-head
           servicePort: 80
   tls:
