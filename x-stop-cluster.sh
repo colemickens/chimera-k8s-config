@@ -4,6 +4,7 @@ set -x
 set -e
 set -u
 
+sudo systemctl daemon-reload
 sudo systemctl stop kubelet
 sudo systemctl disable kubelet
 
