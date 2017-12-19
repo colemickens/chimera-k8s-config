@@ -1,0 +1,22 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: che
+  namespace: default
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: che
+  namespace: default
+subsets:
+  - addresses:
+      - ip: 10.0.0.2
+    ports:
+      - port: 8080
